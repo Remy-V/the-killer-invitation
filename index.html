@@ -240,6 +240,29 @@ body{
   color:var(--bone);
 }
 .brief p:last-child{margin-bottom:0;}
+.brief__rules{
+  list-style:none;
+  counter-reset:rule;
+  margin:0 0 1.15em;
+  padding:0;
+}
+.brief__rules li{
+  counter-increment:rule;
+  display:flex;
+  gap:.85em;
+  margin-bottom:.85em;
+  font-family:'Courier Prime',ui-monospace,monospace;
+  font-size:clamp(.9rem,1.9vw,1.02rem);
+  line-height:1.6;
+  color:var(--bone);
+}
+.brief__rules li:last-child{margin-bottom:0;}
+.brief__rules li::before{
+  content:counter(rule,decimal-leading-zero);
+  flex:0 0 auto;
+  color:var(--blood);
+  font-weight:700;
+}
 .brief strong{
   color:var(--blood-bright);
   font-weight:700;
@@ -283,13 +306,15 @@ body{
       <p><span class="mail__field">Objet :</span> Rassemblement du 1<sup>er</sup> août 2026</p>
     </header>
     <div class="mail__body">
-      <p>Notre organisation, <strong>Killer Inc.</strong>, a pris connaissance d'un rassemblement qui aura lieu ce 1<sup>er</sup> août 2026, ce qui suscite de notre part la plus vive contrariété.</p>
-      <p>Ce pourquoi nous avons engagé un agent infiltré sur place, qui vous distribuera une <strong>enveloppe rouge</strong> contenant une mission à chaque participant.</p>
-      <p>Réussissez votre mission en obtenant de votre cible <strong>une action, un mot, une attention</strong> — peu importe quoi, tant que c'est elle qui l'accomplit. Mission réussie ? Annoncez-le discrètement à votre cible et <strong>récupérez sa carte</strong>. Sa mission devient la vôtre.</p>
-      <p>Éliminé, sans carte, mais l'âme de tueur vous démange encore ? Une porte reste ouverte : <strong>devinez la mission</strong> d'un killer encore en jeu, et sa carte est à vous. <strong>Une seule tentative par killer</strong>, même s'il change de mission entre-temps. Restez à l'affût.</p>
-      <p>Aux killers en jeu : la discrétion n'est pas une option, c'est une exigence. Faites preuve d'imagination pour conduire votre cible à sa perte — et ne soyez pas prévisible, cela se paie toujours au prix fort.</p>
-      <p>Toutes les missions seront valables au <strong>Prieuré de Vernelle à partir de 18h30</strong>.</p>
-      <p>Récoltez un <strong>maximum de cartes Killer</strong>, celui ou celle qui aura le plus de cartes à la fin de la soirée sera contacté(e) par <strong>Killer Inc.</strong> pour une récompense.</p>
+      <p><strong>Killer Inc.</strong> a pris connaissance de votre petite fête du 1<sup>er</sup> août — et a décidé de s'y inviter à sa façon. Voici les règles.</p>
+      <ol class="brief__rules">
+        <li>Un agent infiltré vous remet une <strong>enveloppe rouge</strong> contenant votre mission.</li>
+        <li>Pour tuer, faites accomplir une action à votre cible — un geste, un mot, une attention, peu importe. Mission réussie ? Annoncez-le-lui discrètement et <strong>récupérez sa carte</strong> : sa mission devient la vôtre.</li>
+        <li>Éliminé, sans carte ? <strong>Une seule tentative par killer</strong> : devinez sa mission, et sa carte est à vous.</li>
+        <li>Restez discrets. Restez imprévisibles. Une carte perdue ne se rattrape pas.</li>
+        <li>Toutes les missions sont valables au <strong>Prieuré de Vernelle, à partir de 18h30</strong>.</li>
+        <li>Le plus de cartes à la fin de la soirée sera contacté(e) par <strong>Killer Inc.</strong> pour une récompense.</li>
+      </ol>
       <p class="brief__sign">Bonne chance.</p>
     </div>
   </section>
