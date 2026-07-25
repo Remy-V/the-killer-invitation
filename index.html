@@ -248,8 +248,8 @@ body{
 }
 .brief__rules li{
   counter-increment:rule;
-  display:flex;
-  gap:.85em;
+  position:relative;
+  padding-left:2.3em;
   margin-bottom:.85em;
   font-family:'Courier Prime',ui-monospace,monospace;
   font-size:clamp(.9rem,1.9vw,1.02rem);
@@ -259,7 +259,9 @@ body{
 .brief__rules li:last-child{margin-bottom:0;}
 .brief__rules li::before{
   content:counter(rule,decimal-leading-zero);
-  flex:0 0 auto;
+  position:absolute;
+  left:0;
+  top:0;
   color:var(--blood);
   font-weight:700;
 }
