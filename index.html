@@ -342,7 +342,7 @@ body{
 
 <div class="stage">
   <header class="hero">
-    <h1 class="title">The<br>Killer</h1>
+    <h1 class="title" id="titleTrigger">The<br>Killer</h1>
   </header>
 
   <section class="countdown" aria-label="Compte à rebours avant le mariage">
@@ -384,7 +384,7 @@ body{
     <p class="invite__date">1<sup>er</sup> août 2026 · 18h30</p>
   </section>
 
-  <section class="access">
+  <section class="access" id="access" hidden>
     <form class="access__form" id="accessForm" autocomplete="off">
       <input class="access__input" id="accessInput" type="text" placeholder="Code d'accès" maxlength="12" aria-label="Code d'accès agent">
       <button class="access__submit" type="submit">Valider</button>
@@ -423,6 +423,16 @@ body{
   }
   tick();
   var timer = setInterval(tick, 1000);
+})();
+
+(function(){
+  var trigger = document.getElementById("titleTrigger");
+  var section = document.getElementById("access");
+  var input = document.getElementById("accessInput");
+  trigger.addEventListener("dblclick", function(){
+    section.hidden = false;
+    input.focus();
+  });
 })();
 
 (function(){
