@@ -112,61 +112,56 @@ body{
 }
 .invite__date sup{font-size:.65em;}
 
-/* ---------- countdown ---------- */
-.countdown{
+/* ---------- countdown (terminal) ---------- */
+.terminal{
   position:relative;
-  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  background:var(--void);
   border:1px solid var(--hair);
   border-radius:2px;
-  padding:clamp(1.6rem,4vw,2.6rem) clamp(1rem,4vw,2rem);
+  padding:clamp(1.5rem,5vw,2rem);
+  font-family:'Courier Prime',ui-monospace,monospace;
+  overflow:hidden;
 }
-.countdown::before{
+.terminal::after{
   content:"";
-  position:absolute;
-  left:0;right:0;top:-1px;
-  height:6px;
-  background:
-    linear-gradient(135deg,transparent 50%,var(--void) 50%) 0 0/14px 12px repeat-x,
-    linear-gradient(-135deg,transparent 50%,var(--void) 50%) 0 0/14px 12px repeat-x;
-  background-position:0 0,7px 0;
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(216,38,43,.035) 0px,
+    rgba(216,38,43,.035) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events:none;
+  animation:scan 9s linear infinite;
 }
-.countdown__grid{
+.terminal__head{
   display:flex;
-  align-items:baseline;
-  justify-content:center;
-  gap:clamp(.4rem,2vw,1rem);
-  flex-wrap:wrap;
-}
-.countdown__unit{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  min-width:4.4em;
-}
-.countdown__value{
-  font-family:'Courier Prime',ui-monospace,monospace;
-  font-weight:700;
-  font-size:clamp(2.1rem,7vw,3.6rem);
-  color:var(--bone);
-  font-variant-numeric:tabular-nums;
-  line-height:1;
-}
-.countdown__label{
-  margin-top:.5em;
-  font-family:'Courier Prime',ui-monospace,monospace;
-  font-size:.68rem;
-  letter-spacing:.28em;
+  justify-content:space-between;
+  font-size:.66rem;
+  letter-spacing:.1em;
   text-transform:uppercase;
   color:var(--steel-dim);
+  margin-bottom:1em;
+  padding-bottom:.8em;
+  border-bottom:1px dashed var(--hair);
 }
-.countdown__sep{
-  font-family:'Courier Prime',ui-monospace,monospace;
-  font-weight:700;
-  font-size:clamp(1.6rem,5vw,2.6rem);
-  color:var(--blood);
-  align-self:flex-start;
-  padding-top:.05em;
-  animation:blink 1.6s steps(1) infinite;
+.terminal__line{
+  font-size:clamp(1rem,4vw,1.35rem);
+  font-variant-numeric:tabular-nums;
+  color:var(--blood-bright);
+  margin:0 0 .5em;
+  line-height:1.5;
+}
+.terminal__line:last-child{margin-bottom:0;}
+.terminal__line .dim{color:var(--steel);}
+.terminal__cursor{
+  display:inline-block;
+  width:.55em;height:1em;
+  background:var(--blood-bright);
+  vertical-align:-.15em;
+  margin-left:.15em;
+  animation:blink 1s steps(1) infinite;
 }
 .countdown__status{
   margin:1.5rem 0 0;
@@ -175,13 +170,11 @@ body{
   font-size:1.1rem;
   color:var(--blood-bright);
 }
-@keyframes blink{50%{opacity:.25;}}
+@keyframes blink{50%{opacity:.15;}}
+@keyframes scan{0%{transform:translateY(0);}100%{transform:translateY(3px);}}
 @media (prefers-reduced-motion:reduce){
-  .countdown__sep{animation:none;}
-}
-@media (max-width:420px){
-  .countdown__sep{display:none;}
-  .countdown__grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem 1rem;}
+  .terminal::after{animation:none;}
+  .terminal__cursor{animation:none;}
 }
 
 /* ---------- brief ---------- */
@@ -346,14 +339,10 @@ body{
   </header>
 
   <section class="countdown" aria-label="Compte à rebours avant le mariage">
-    <div class="countdown__grid" id="cdGrid">
-      <div class="countdown__unit"><span class="countdown__value" id="cd-d">00</span><span class="countdown__label">Jours</span></div>
-      <span class="countdown__sep" aria-hidden="true">:</span>
-      <div class="countdown__unit"><span class="countdown__value" id="cd-h">00</span><span class="countdown__label">Heures</span></div>
-      <span class="countdown__sep" aria-hidden="true">:</span>
-      <div class="countdown__unit"><span class="countdown__value" id="cd-m">00</span><span class="countdown__label">Minutes</span></div>
-      <span class="countdown__sep" aria-hidden="true">:</span>
-      <div class="countdown__unit"><span class="countdown__value" id="cd-s">00</span><span class="countdown__label">Secondes</span></div>
+    <div class="terminal" id="cdTerminal">
+      <div class="terminal__head"><span>killer-inc // dispatch</span><span id="cdClock">--:--:--</span></div>
+      <p class="terminal__line" id="cdLine"><span class="dim">&gt; t-moins</span> 00j 00h 00m 00s<span class="terminal__cursor"></span></p>
+      <p class="terminal__line dim" style="font-size:.72rem;">&gt; rendez-vous : prieuré de vernelle, 18h30</p>
     </div>
     <p class="countdown__status" id="cdStatus" hidden>C'est l'heure. Rendez-vous sur les lieux du crime.</p>
     <noscript><p class="countdown__status">Rendez-vous le 1er août 2026 à 18h30.</p></noscript>
@@ -395,20 +384,16 @@ body{
 <script>
 (function(){
   var target = new Date("2026-08-01T18:30:00+02:00").getTime();
-  var grid = document.getElementById("cdGrid");
+  var terminal = document.getElementById("cdTerminal");
   var status = document.getElementById("cdStatus");
-  var els = {
-    d: document.getElementById("cd-d"),
-    h: document.getElementById("cd-h"),
-    m: document.getElementById("cd-m"),
-    s: document.getElementById("cd-s")
-  };
+  var line = document.getElementById("cdLine");
+  var clock = document.getElementById("cdClock");
   function pad(n){ return String(n).padStart(2,"0"); }
   function tick(){
     var diff = target - Date.now();
     if(diff <= 0){
       clearInterval(timer);
-      grid.hidden = true;
+      terminal.hidden = true;
       status.hidden = false;
       return;
     }
@@ -416,10 +401,9 @@ body{
     var d = Math.floor(s/86400); s -= d*86400;
     var h = Math.floor(s/3600); s -= h*3600;
     var m = Math.floor(s/60); s -= m*60;
-    els.d.textContent = pad(d);
-    els.h.textContent = pad(h);
-    els.m.textContent = pad(m);
-    els.s.textContent = pad(s);
+    line.innerHTML = '<span class="dim">&gt; t-moins</span> ' + pad(d) + 'j ' + pad(h) + 'h ' + pad(m) + 'm ' + pad(s) + 's<span class="terminal__cursor"></span>';
+    var now = new Date();
+    clock.textContent = pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds());
   }
   tick();
   var timer = setInterval(tick, 1000);
