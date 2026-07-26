@@ -410,7 +410,7 @@ body::after{
   <section class="countdown" aria-label="Compte à rebours avant le mariage">
     <div class="terminal" id="cdTerminal">
       <div class="terminal__head"><span>killer-inc // dispatch</span><span id="cdClock">--:--:--</span></div>
-      <p class="terminal__line" id="cdLine"><span class="dim">&gt; t-moins</span> 00j 00h 00m 00s<span class="terminal__cursor"></span></p>
+      <p class="terminal__line" id="cdLine"><span class="dim">&gt; COUNTDOWN</span> 00j 00h 00m 00s<span class="terminal__cursor"></span></p>
       <p class="terminal__line dim" style="font-size:.72rem;">&gt; rendez-vous : prieuré de vernelle, 18h30</p>
     </div>
     <p class="countdown__status" id="cdStatus" hidden>C'est l'heure. Rendez-vous sur les lieux du crime.</p>
@@ -470,7 +470,7 @@ body::after{
     var d = Math.floor(s/86400); s -= d*86400;
     var h = Math.floor(s/3600); s -= h*3600;
     var m = Math.floor(s/60); s -= m*60;
-    line.innerHTML = '<span class="dim">&gt; t-moins</span> ' + pad(d) + 'j ' + pad(h) + 'h ' + pad(m) + 'm ' + pad(s) + 's<span class="terminal__cursor"></span>';
+    line.innerHTML = '<span class="dim">&gt; COUNTDOWN</span> ' + pad(d) + 'j ' + pad(h) + 'h ' + pad(m) + 'm ' + pad(s) + 's<span class="terminal__cursor"></span>';
     var now = new Date();
     clock.textContent = pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds());
   }
