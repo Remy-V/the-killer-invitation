@@ -157,6 +157,71 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
 }
 .mission__name::placeholder{color:var(--steel-dim);}
 .mission__name:focus{outline:none;border-bottom-color:var(--blood);}
+.mission__name[readonly]{
+  color:var(--steel);
+  border-bottom-color:transparent;
+  cursor:default;
+}
+
+/* ---------- access ---------- */
+.access{
+  text-align:center;
+}
+.access__form{
+  display:inline-flex;
+  align-items:center;
+  gap:.5em;
+}
+.access__input{
+  background:var(--panel);
+  border:1px solid var(--hair);
+  border-radius:2px;
+  color:var(--bone);
+  font-family:'Courier Prime',ui-monospace,monospace;
+  font-size:.78rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  text-align:center;
+  width:12em;
+  padding:.55em .6em;
+}
+.access__input::placeholder{
+  color:var(--steel-dim);
+  letter-spacing:.1em;
+  text-transform:none;
+}
+.access__input:focus{
+  outline:none;
+  border-color:var(--blood);
+}
+.access__submit{
+  background:none;
+  border:1px solid var(--hair);
+  border-radius:2px;
+  color:var(--steel);
+  font-family:'Courier Prime',ui-monospace,monospace;
+  font-size:.7rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:.56em .8em;
+  cursor:pointer;
+}
+.access__submit:hover,
+.access__submit:focus-visible{
+  color:var(--blood-bright);
+  border-color:var(--blood);
+}
+.access.is-wrong .access__input{
+  border-color:var(--blood-bright);
+  animation:shake .3s;
+}
+@keyframes shake{
+  25%{transform:translateX(-4px);}
+  75%{transform:translateX(4px);}
+}
+@media (prefers-reduced-motion:reduce){
+  .access.is-wrong .access__input{animation:none;}
+}
 
 @media (max-width:640px){
   #missionsTable thead{display:none;}
@@ -214,10 +279,17 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
 
 <div class="stage">
   <header class="hero">
-    <h1 class="title">Missions</h1>
+    <h1 class="title" id="titleTrigger">Missions</h1>
     <p class="hero__lead">76 missions. Trois niveaux. Une seule règle : ne pas se faire prendre.</p>
     <a class="back" href="index.html">‹ Retour</a>
   </header>
+
+  <section class="access" id="access" hidden>
+    <form class="access__form" id="accessForm" autocomplete="off">
+      <input class="access__input" id="accessInput" type="text" placeholder="Code d'édition" maxlength="12" aria-label="Code d'édition des noms">
+      <button class="access__submit" type="submit">Valider</button>
+    </form>
+  </section>
 
   <nav class="filters" aria-label="Filtrer par niveau">
     <button class="filters__btn is-active" data-filter="all" type="button">Toutes</button>
@@ -237,82 +309,82 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
         </tr>
       </thead>
       <tbody>
-        <tr data-junior="1" data-confirme="1" data-id="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">1. Apporter un verre à quelqu'un 3 fois de suite (s'il se sert entre deux verres, le compteur retombe à zéro).</span><input class="mission__name" type="text" data-id="1" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 1"></td></tr>
-        <tr data-junior="1" data-id="2"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">2. Porter les lunettes de vue de quelqu'un pendant au moins 1 minute.</span><input class="mission__name" type="text" data-id="2" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 2"></td></tr>
-        <tr data-junior="1" data-id="3"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">3. Faire un combat de pouce avec quelqu'un. 2 manches minimum.</span><input class="mission__name" type="text" data-id="3" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 3"></td></tr>
-        <tr data-junior="1" data-id="4"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">4. Faire marcher quelqu'un à reculons sur au moins 3 mètres.</span><input class="mission__name" type="text" data-id="4" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 4"></td></tr>
-        <tr data-junior="1" data-id="5"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">5. Faire faire deux DAB, un vers la droite, un vers la gauche, à quelqu'un.</span><input class="mission__name" type="text" data-id="5" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 5"></td></tr>
-        <tr data-junior="1" data-id="6"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">6. Faire faire un 67 à quelqu'un.</span><input class="mission__name" type="text" data-id="6" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 6"></td></tr>
-        <tr data-junior="1" data-id="7"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">7. Faire un massage d'épaule à quelqu'un pendant au moins une minute.</span><input class="mission__name" type="text" data-id="7" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 7"></td></tr>
-        <tr data-junior="1" data-id="8"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">8. Faire s'asseoir quelqu'un par-terre avec toi et rester au moins 2 minutes.</span><input class="mission__name" type="text" data-id="8" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 8"></td></tr>
-        <tr data-confirme="1" data-id="9"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">9. Faire un tour de magie à quelqu'un (vous devez obtenir son consentement). Vous ne savez pas faire de tour de magie ? Cherchez sur internet, les plus simples peuvent être les plus efficaces... ou pas...</span><input class="mission__name" type="text" data-id="9" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 9"></td></tr>
-        <tr data-confirme="1" data-id="10"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">10. Porter quelqu'un sur son dos ou inversement et marcher au moins 5 mètres.</span><input class="mission__name" type="text" data-id="10" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 10"></td></tr>
-        <tr data-confirme="1" data-id="11"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">11. Allumer la cigarette de quelqu'un au moins 2 fois. Vous n'avez pas de briquet ? Dommage pour vous... Trouvez-en un.</span><input class="mission__name" type="text" data-id="11" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 11"></td></tr>
-        <tr data-junior="1" data-id="12"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">12. Faire réciter le théorème de Pythagore à quelqu'un.</span><input class="mission__name" type="text" data-id="12" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 12"></td></tr>
-        <tr data-junior="1" data-id="13"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">13. Faire 3 parties de chifoumi avec quelqu'un.</span><input class="mission__name" type="text" data-id="13" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 13"></td></tr>
-        <tr data-confirme="1" data-id="14"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">14. Demander de garder sa place à quelqu'un, le/la faire placer à votre place et la récupérer après votre absence.</span><input class="mission__name" type="text" data-id="14" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 14"></td></tr>
-        <tr data-senior="1" data-id="15"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">15. Faire chanter quelqu'un avec un objet en guise de micro (il doit le prendre en main).</span><input class="mission__name" type="text" data-id="15" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 15"></td></tr>
-        <tr data-confirme="1" data-id="16"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">16. Faire tenir son verre à quelqu'un pendant au moins 3 minutes (partir est autorisé, mais la personne doit le garder dans sa main).</span><input class="mission__name" type="text" data-id="16" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 16"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="17"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">17. Faire tenir ou porter un objet insolite sur la tête à quelqu'un, soit pendant 3 minutes, soit faire une photo avec.</span><input class="mission__name" type="text" data-id="17" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 17"></td></tr>
-        <tr data-confirme="1" data-id="18"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">18. Manger un aliment sans le toucher, donné par quelqu'un.</span><input class="mission__name" type="text" data-id="18" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 18"></td></tr>
-        <tr data-senior="1" data-id="19"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">19. Faire faire raconter une anecdote commençant par "Quand j'étais petit" à quelqu'un.</span><input class="mission__name" type="text" data-id="19" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 19"></td></tr>
-        <tr data-senior="1" data-id="20"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">20. Obtenir l'heure d'une personne 3 fois en l'espace de 20 minutes.</span><input class="mission__name" type="text" data-id="20" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 20"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="21"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">21. Faire faire un calcul sur le téléphone de quelqu'un, il doit vous annoncer le résultat.</span><input class="mission__name" type="text" data-id="21" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 21"></td></tr>
-        <tr data-confirme="1" data-id="22"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">22. Emprunter un accessoire de quelqu'un avec son accord, et le porter 3 minutes minimum (montre, bijou, acceptés, lunettes trop facile).</span><input class="mission__name" type="text" data-id="22" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 22"></td></tr>
-        <tr data-confirme="1" data-id="23"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">23. Faire finir ses fins de phrases au moins 3 fois par quelqu'un sans perdre la parole.</span><input class="mission__name" type="text" data-id="23" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 23"></td></tr>
-        <tr data-confirme="1" data-id="24"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">24. Faire faire une ombre chinoise avec la lumière du vidéo-projecteur à quelqu'un.</span><input class="mission__name" type="text" data-id="24" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 24"></td></tr>
-        <tr data-senior="1" data-id="25"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">25. Faire chanter avec toi un refrain d'une chanson a capella (si musique de fond/DJ, non valide).</span><input class="mission__name" type="text" data-id="25" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 25"></td></tr>
-        <tr data-confirme="1" data-id="26"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">26. Faire sauter quelqu'un au moins 5 fois de suite (exercices, jump jacks, etc. autorisés).</span><input class="mission__name" type="text" data-id="26" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 26"></td></tr>
-        <tr data-confirme="1" data-id="27"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">27. Improviser un mélange improbable d'au moins 2 boissons (au moins 20cl) et le faire boire à quelqu'un. Attention, il doit le boire en entier.</span><input class="mission__name" type="text" data-id="27" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 27"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="28"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">28. Attacher quelque chose sur les cheveux (oreille, tête, ...) de quelqu'un, pendant au moins 5 minutes.</span><input class="mission__name" type="text" data-id="28" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 28"></td></tr>
-        <tr data-senior="1" data-id="29"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">29. Faire tenir ta chaussure à quelqu'un pendant au moins 30 secondes.</span><input class="mission__name" type="text" data-id="29" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 29"></td></tr>
-        <tr data-confirme="1" data-id="30"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">30. Faire dire une phrase en langue étrangère (en anglais -&gt; 3 phrases minimum) à quelqu'un.</span><input class="mission__name" type="text" data-id="30" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 30"></td></tr>
-        <tr data-confirme="1" data-id="31"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">31. Faire courir quelqu'un tout seul sur au moins 5 mètres.</span><input class="mission__name" type="text" data-id="31" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 31"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="32"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">32. Inventer un check avec quelqu'un.</span><input class="mission__name" type="text" data-id="32" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 32"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="33"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">33. Apprendre à quelqu'un une phrase compliquée à prononcer (exemple : Si 6 scies scient 6 saucissons, 600 scies scient 600 saucissons).</span><input class="mission__name" type="text" data-id="33" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 33"></td></tr>
-        <tr data-senior="1" data-id="34"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">34. Faire faire se gratter la nuque à quelqu'un pendant une conversation.</span><input class="mission__name" type="text" data-id="34" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 34"></td></tr>
-        <tr data-senior="1" data-id="35"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">35. Faire danser quelqu'un avec un objet (minimum un peu encombrant, un verre ne marche pas).</span><input class="mission__name" type="text" data-id="35" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 35"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="36"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">36. Faire du Air-Guitar (ou n'importe quel instrument) avec quelqu'un.</span><input class="mission__name" type="text" data-id="36" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 36"></td></tr>
-        <tr data-confirme="1" data-id="37"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">37. Faire boire de l'alcool à la cuillère à quelqu'un.</span><input class="mission__name" type="text" data-id="37" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 37"></td></tr>
-        <tr data-confirme="1" data-id="38"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">38. Demander une cigarette à quelqu'un et ne pas la fumer avec lui. La garder au moins 5 minutes.</span><input class="mission__name" type="text" data-id="38" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 38"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="39"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">39. Faire une story selfie publiée (n'importe quel réseau social) avec quelqu'un.</span><input class="mission__name" type="text" data-id="39" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 39"></td></tr>
-        <tr data-confirme="1" data-id="40"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">40. Faire un selfie avec le téléphone de quelqu'un d'autre (tue la personne qui a le téléphone).</span><input class="mission__name" type="text" data-id="40" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 40"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="41"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">41. Jouer à "Daniel" avec quelqu'un (appeler un "Daniel" le plus fort possible pour qu'un maximum de gens se retournent).</span><input class="mission__name" type="text" data-id="41" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 41"></td></tr>
-        <tr data-senior="1" data-id="42"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">42. Faire les lacets de quelqu'un (autorisé à les défaire, soyez discret, mais à vous de les refaire).</span><input class="mission__name" type="text" data-id="42" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 42"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="43"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">43. Recoiffer 3 fois quelqu'un. Pas de limite de temps, mais pas à la chaîne.</span><input class="mission__name" type="text" data-id="43" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 43"></td></tr>
-        <tr data-senior="1" data-id="44"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">44. Demander à quelqu'un d'appeler par téléphone n'importe quel numéro.</span><input class="mission__name" type="text" data-id="44" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 44"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="45"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">45. Faire faire un high-five avec quelqu'un et le rater 2 fois volontairement.</span><input class="mission__name" type="text" data-id="45" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 45"></td></tr>
-        <tr data-senior="1" data-id="46"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">46. Faire citer au moins 3 répliques d'un même film/série à quelqu'un.</span><input class="mission__name" type="text" data-id="46" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 46"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="47"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">47. Te faire amener un chargeur de téléphone par quelqu'un (batterie externe autorisée).</span><input class="mission__name" type="text" data-id="47" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 47"></td></tr>
-        <tr data-confirme="1" data-id="48"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">48. Montrer le chemin des toilettes à quelqu'un. Attention, la destination ne doit pas être les toilettes.</span><input class="mission__name" type="text" data-id="48" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 48"></td></tr>
-        <tr data-confirme="1" data-id="49"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">49. Convaincre quelqu'un d'essayer de se lécher le coude.</span><input class="mission__name" type="text" data-id="49" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 49"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="50"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">50. Faire la bise 3 fois au cours de la journée à quelqu'un.</span><input class="mission__name" type="text" data-id="50" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 50"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="51"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">51. Récupérer la carte Killer de quelqu'un sans qu'elle s'en aperçoive. Son objectif devient le vôtre s'il ne réclame pas sa carte après 10 minutes.</span><input class="mission__name" type="text" data-id="51" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 51"></td></tr>
-        <tr data-confirme="1" data-id="52"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">52. Dessiner quelque chose sur la peau de quelqu'un, avec consentement.</span><input class="mission__name" type="text" data-id="52" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 52"></td></tr>
-        <tr data-confirme="1" data-id="53"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">53. Faire faire une pile d'objets qui doit tenir en équilibre à quelqu'un.</span><input class="mission__name" type="text" data-id="53" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 53"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="54"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">54. Faire jongler quelqu'un.</span><input class="mission__name" type="text" data-id="54" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 54"></td></tr>
-        <tr data-confirme="1" data-id="55"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">55. Faire répéter 4 fois de suite quelqu'un.</span><input class="mission__name" type="text" data-id="55" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 55"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="56"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">56. Faire regarder une vidéo YouTube à quelqu'un (une minute minimum).</span><input class="mission__name" type="text" data-id="56" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 56"></td></tr>
-        <tr data-confirme="1" data-id="57"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">57. Faire une "pinky promesse" avec quelqu'un.</span><input class="mission__name" type="text" data-id="57" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 57"></td></tr>
-        <tr data-senior="1" data-id="58"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">58. Faire énoncer le code de déverrouillage de son téléphone à voix haute à quelqu'un.</span><input class="mission__name" type="text" data-id="58" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 58"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="59"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">59. Jouer au jeu du silence avec quelqu'un et remporter la partie.</span><input class="mission__name" type="text" data-id="59" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 59"></td></tr>
-        <tr data-senior="1" data-id="60"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">60. Convaincre quelqu'un de te dévoiler sa mission. Sa mission deviendra la vôtre.</span><input class="mission__name" type="text" data-id="60" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 60"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="61"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">61. Faire dire son numéro de sécurité sociale à quelqu'un.</span><input class="mission__name" type="text" data-id="61" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 61"></td></tr>
-        <tr data-junior="1" data-id="62"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">62. Faire sortir sa carte d'identité à quelqu'un (permis, autre autorisé, du moment qu'il y a sa photo).</span><input class="mission__name" type="text" data-id="62" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 62"></td></tr>
-        <tr data-junior="1" data-id="63"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">63. Faire boire à l'envers quelqu'un (verre sous le menton), un hoquet serait le bienvenu.</span><input class="mission__name" type="text" data-id="63" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 63"></td></tr>
-        <tr data-junior="1" data-id="64"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">64. Trinquer 3 fois avec quelqu'un, espacé de 30 sec maximum.</span><input class="mission__name" type="text" data-id="64" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 64"></td></tr>
-        <tr data-junior="1" data-id="65"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">65. Demander un mouchoir 3 fois à quelqu'un.</span><input class="mission__name" type="text" data-id="65" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 65"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="66"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">66. Obtenir un autographe de quelqu'un.</span><input class="mission__name" type="text" data-id="66" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 66"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="67"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">67. Faire faire le poirier à quelqu'un.</span><input class="mission__name" type="text" data-id="67" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 67"></td></tr>
-        <tr data-junior="1" data-id="68"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">68. Demander 5 capitales à quelqu'un.</span><input class="mission__name" type="text" data-id="68" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 68"></td></tr>
-        <tr data-junior="1" data-confirme="1" data-id="69"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">69. Faire faire au moins 5 pompes à quelqu'un.</span><input class="mission__name" type="text" data-id="69" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 69"></td></tr>
-        <tr data-junior="1" data-id="70"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">70. Faire 3 câlins à la même personne en l'espace de 20 minutes.</span><input class="mission__name" type="text" data-id="70" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 70"></td></tr>
-        <tr data-senior="1" data-id="71"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">71. Lui faire pincer son nez en disant "Ohhhh c'est rigolo".</span><input class="mission__name" type="text" data-id="71" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 71"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="72"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">72. Faire imiter la mitraillette à quelqu'un.</span><input class="mission__name" type="text" data-id="72" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 72"></td></tr>
-        <tr data-id="73"><td></td><td></td><td></td><td><span class="mission__text">73. Mettre une alarme à 4h00 du matin pour demain sur le téléphone de quelqu'un.</span><input class="mission__name" type="text" data-id="73" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 73"></td></tr>
-        <tr data-senior="1" data-id="74"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">74. Faire rager quelqu'un.</span><input class="mission__name" type="text" data-id="74" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 74"></td></tr>
-        <tr data-junior="1" data-id="75"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">75. Faire porter ta veste pendant 5 minutes à quelqu'un.</span><input class="mission__name" type="text" data-id="75" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 75"></td></tr>
-        <tr data-confirme="1" data-senior="1" data-id="76"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">76. Faire un tunnel pendant 3 minutes sur un sujet dont il s'en fout.</span><input class="mission__name" type="text" data-id="76" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 76"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">1. Apporter un verre à quelqu'un 3 fois de suite (s'il se sert entre deux verres, le compteur retombe à zéro).</span><input class="mission__name" type="text" readonly data-id="1" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 1"></td></tr>
+        <tr data-junior="1" data-id="2"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">2. Porter les lunettes de vue de quelqu'un pendant au moins 1 minute.</span><input class="mission__name" type="text" readonly data-id="2" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 2"></td></tr>
+        <tr data-junior="1" data-id="3"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">3. Faire un combat de pouce avec quelqu'un. 2 manches minimum.</span><input class="mission__name" type="text" readonly data-id="3" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 3"></td></tr>
+        <tr data-junior="1" data-id="4"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">4. Faire marcher quelqu'un à reculons sur au moins 3 mètres.</span><input class="mission__name" type="text" readonly data-id="4" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 4"></td></tr>
+        <tr data-junior="1" data-id="5"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">5. Faire faire deux DAB, un vers la droite, un vers la gauche, à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="5" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 5"></td></tr>
+        <tr data-junior="1" data-id="6"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">6. Faire faire un 67 à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="6" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 6"></td></tr>
+        <tr data-junior="1" data-id="7"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">7. Faire un massage d'épaule à quelqu'un pendant au moins une minute.</span><input class="mission__name" type="text" readonly data-id="7" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 7"></td></tr>
+        <tr data-junior="1" data-id="8"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">8. Faire s'asseoir quelqu'un par-terre avec toi et rester au moins 2 minutes.</span><input class="mission__name" type="text" readonly data-id="8" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 8"></td></tr>
+        <tr data-confirme="1" data-id="9"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">9. Faire un tour de magie à quelqu'un (vous devez obtenir son consentement). Vous ne savez pas faire de tour de magie ? Cherchez sur internet, les plus simples peuvent être les plus efficaces... ou pas...</span><input class="mission__name" type="text" readonly data-id="9" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 9"></td></tr>
+        <tr data-confirme="1" data-id="10"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">10. Porter quelqu'un sur son dos ou inversement et marcher au moins 5 mètres.</span><input class="mission__name" type="text" readonly data-id="10" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 10"></td></tr>
+        <tr data-confirme="1" data-id="11"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">11. Allumer la cigarette de quelqu'un au moins 2 fois. Vous n'avez pas de briquet ? Dommage pour vous... Trouvez-en un.</span><input class="mission__name" type="text" readonly data-id="11" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 11"></td></tr>
+        <tr data-junior="1" data-id="12"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">12. Faire réciter le théorème de Pythagore à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="12" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 12"></td></tr>
+        <tr data-junior="1" data-id="13"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">13. Faire 3 parties de chifoumi avec quelqu'un.</span><input class="mission__name" type="text" readonly data-id="13" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 13"></td></tr>
+        <tr data-confirme="1" data-id="14"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">14. Demander de garder sa place à quelqu'un, le/la faire placer à votre place et la récupérer après votre absence.</span><input class="mission__name" type="text" readonly data-id="14" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 14"></td></tr>
+        <tr data-senior="1" data-id="15"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">15. Faire chanter quelqu'un avec un objet en guise de micro (il doit le prendre en main).</span><input class="mission__name" type="text" readonly data-id="15" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 15"></td></tr>
+        <tr data-confirme="1" data-id="16"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">16. Faire tenir son verre à quelqu'un pendant au moins 3 minutes (partir est autorisé, mais la personne doit le garder dans sa main).</span><input class="mission__name" type="text" readonly data-id="16" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 16"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="17"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">17. Faire tenir ou porter un objet insolite sur la tête à quelqu'un, soit pendant 3 minutes, soit faire une photo avec.</span><input class="mission__name" type="text" readonly data-id="17" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 17"></td></tr>
+        <tr data-confirme="1" data-id="18"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">18. Manger un aliment sans le toucher, donné par quelqu'un.</span><input class="mission__name" type="text" readonly data-id="18" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 18"></td></tr>
+        <tr data-senior="1" data-id="19"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">19. Faire faire raconter une anecdote commençant par "Quand j'étais petit" à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="19" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 19"></td></tr>
+        <tr data-senior="1" data-id="20"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">20. Obtenir l'heure d'une personne 3 fois en l'espace de 20 minutes.</span><input class="mission__name" type="text" readonly data-id="20" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 20"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="21"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">21. Faire faire un calcul sur le téléphone de quelqu'un, il doit vous annoncer le résultat.</span><input class="mission__name" type="text" readonly data-id="21" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 21"></td></tr>
+        <tr data-confirme="1" data-id="22"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">22. Emprunter un accessoire de quelqu'un avec son accord, et le porter 3 minutes minimum (montre, bijou, acceptés, lunettes trop facile).</span><input class="mission__name" type="text" readonly data-id="22" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 22"></td></tr>
+        <tr data-confirme="1" data-id="23"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">23. Faire finir ses fins de phrases au moins 3 fois par quelqu'un sans perdre la parole.</span><input class="mission__name" type="text" readonly data-id="23" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 23"></td></tr>
+        <tr data-confirme="1" data-id="24"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">24. Faire faire une ombre chinoise avec la lumière du vidéo-projecteur à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="24" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 24"></td></tr>
+        <tr data-senior="1" data-id="25"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">25. Faire chanter avec toi un refrain d'une chanson a capella (si musique de fond/DJ, non valide).</span><input class="mission__name" type="text" readonly data-id="25" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 25"></td></tr>
+        <tr data-confirme="1" data-id="26"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">26. Faire sauter quelqu'un au moins 5 fois de suite (exercices, jump jacks, etc. autorisés).</span><input class="mission__name" type="text" readonly data-id="26" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 26"></td></tr>
+        <tr data-confirme="1" data-id="27"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">27. Improviser un mélange improbable d'au moins 2 boissons (au moins 20cl) et le faire boire à quelqu'un. Attention, il doit le boire en entier.</span><input class="mission__name" type="text" readonly data-id="27" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 27"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="28"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">28. Attacher quelque chose sur les cheveux (oreille, tête, ...) de quelqu'un, pendant au moins 5 minutes.</span><input class="mission__name" type="text" readonly data-id="28" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 28"></td></tr>
+        <tr data-senior="1" data-id="29"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">29. Faire tenir ta chaussure à quelqu'un pendant au moins 30 secondes.</span><input class="mission__name" type="text" readonly data-id="29" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 29"></td></tr>
+        <tr data-confirme="1" data-id="30"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">30. Faire dire une phrase en langue étrangère (en anglais -&gt; 3 phrases minimum) à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="30" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 30"></td></tr>
+        <tr data-confirme="1" data-id="31"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">31. Faire courir quelqu'un tout seul sur au moins 5 mètres.</span><input class="mission__name" type="text" readonly data-id="31" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 31"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="32"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">32. Inventer un check avec quelqu'un.</span><input class="mission__name" type="text" readonly data-id="32" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 32"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="33"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">33. Apprendre à quelqu'un une phrase compliquée à prononcer (exemple : Si 6 scies scient 6 saucissons, 600 scies scient 600 saucissons).</span><input class="mission__name" type="text" readonly data-id="33" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 33"></td></tr>
+        <tr data-senior="1" data-id="34"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">34. Faire faire se gratter la nuque à quelqu'un pendant une conversation.</span><input class="mission__name" type="text" readonly data-id="34" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 34"></td></tr>
+        <tr data-senior="1" data-id="35"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">35. Faire danser quelqu'un avec un objet (minimum un peu encombrant, un verre ne marche pas).</span><input class="mission__name" type="text" readonly data-id="35" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 35"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="36"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">36. Faire du Air-Guitar (ou n'importe quel instrument) avec quelqu'un.</span><input class="mission__name" type="text" readonly data-id="36" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 36"></td></tr>
+        <tr data-confirme="1" data-id="37"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">37. Faire boire de l'alcool à la cuillère à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="37" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 37"></td></tr>
+        <tr data-confirme="1" data-id="38"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">38. Demander une cigarette à quelqu'un et ne pas la fumer avec lui. La garder au moins 5 minutes.</span><input class="mission__name" type="text" readonly data-id="38" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 38"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="39"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">39. Faire une story selfie publiée (n'importe quel réseau social) avec quelqu'un.</span><input class="mission__name" type="text" readonly data-id="39" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 39"></td></tr>
+        <tr data-confirme="1" data-id="40"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">40. Faire un selfie avec le téléphone de quelqu'un d'autre (tue la personne qui a le téléphone).</span><input class="mission__name" type="text" readonly data-id="40" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 40"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="41"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">41. Jouer à "Daniel" avec quelqu'un (appeler un "Daniel" le plus fort possible pour qu'un maximum de gens se retournent).</span><input class="mission__name" type="text" readonly data-id="41" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 41"></td></tr>
+        <tr data-senior="1" data-id="42"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">42. Faire les lacets de quelqu'un (autorisé à les défaire, soyez discret, mais à vous de les refaire).</span><input class="mission__name" type="text" readonly data-id="42" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 42"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="43"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">43. Recoiffer 3 fois quelqu'un. Pas de limite de temps, mais pas à la chaîne.</span><input class="mission__name" type="text" readonly data-id="43" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 43"></td></tr>
+        <tr data-senior="1" data-id="44"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">44. Demander à quelqu'un d'appeler par téléphone n'importe quel numéro.</span><input class="mission__name" type="text" readonly data-id="44" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 44"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="45"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">45. Faire faire un high-five avec quelqu'un et le rater 2 fois volontairement.</span><input class="mission__name" type="text" readonly data-id="45" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 45"></td></tr>
+        <tr data-senior="1" data-id="46"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">46. Faire citer au moins 3 répliques d'un même film/série à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="46" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 46"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="47"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">47. Te faire amener un chargeur de téléphone par quelqu'un (batterie externe autorisée).</span><input class="mission__name" type="text" readonly data-id="47" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 47"></td></tr>
+        <tr data-confirme="1" data-id="48"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">48. Montrer le chemin des toilettes à quelqu'un. Attention, la destination ne doit pas être les toilettes.</span><input class="mission__name" type="text" readonly data-id="48" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 48"></td></tr>
+        <tr data-confirme="1" data-id="49"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">49. Convaincre quelqu'un d'essayer de se lécher le coude.</span><input class="mission__name" type="text" readonly data-id="49" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 49"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="50"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">50. Faire la bise 3 fois au cours de la journée à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="50" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 50"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="51"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">51. Récupérer la carte Killer de quelqu'un sans qu'elle s'en aperçoive. Son objectif devient le vôtre s'il ne réclame pas sa carte après 10 minutes.</span><input class="mission__name" type="text" readonly data-id="51" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 51"></td></tr>
+        <tr data-confirme="1" data-id="52"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">52. Dessiner quelque chose sur la peau de quelqu'un, avec consentement.</span><input class="mission__name" type="text" readonly data-id="52" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 52"></td></tr>
+        <tr data-confirme="1" data-id="53"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">53. Faire faire une pile d'objets qui doit tenir en équilibre à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="53" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 53"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="54"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">54. Faire jongler quelqu'un.</span><input class="mission__name" type="text" readonly data-id="54" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 54"></td></tr>
+        <tr data-confirme="1" data-id="55"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">55. Faire répéter 4 fois de suite quelqu'un.</span><input class="mission__name" type="text" readonly data-id="55" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 55"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="56"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">56. Faire regarder une vidéo YouTube à quelqu'un (une minute minimum).</span><input class="mission__name" type="text" readonly data-id="56" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 56"></td></tr>
+        <tr data-confirme="1" data-id="57"><td></td><td class="lvl">✓</td><td></td><td><span class="mission__text">57. Faire une "pinky promesse" avec quelqu'un.</span><input class="mission__name" type="text" readonly data-id="57" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 57"></td></tr>
+        <tr data-senior="1" data-id="58"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">58. Faire énoncer le code de déverrouillage de son téléphone à voix haute à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="58" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 58"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="59"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">59. Jouer au jeu du silence avec quelqu'un et remporter la partie.</span><input class="mission__name" type="text" readonly data-id="59" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 59"></td></tr>
+        <tr data-senior="1" data-id="60"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">60. Convaincre quelqu'un de te dévoiler sa mission. Sa mission deviendra la vôtre.</span><input class="mission__name" type="text" readonly data-id="60" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 60"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="61"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">61. Faire dire son numéro de sécurité sociale à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="61" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 61"></td></tr>
+        <tr data-junior="1" data-id="62"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">62. Faire sortir sa carte d'identité à quelqu'un (permis, autre autorisé, du moment qu'il y a sa photo).</span><input class="mission__name" type="text" readonly data-id="62" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 62"></td></tr>
+        <tr data-junior="1" data-id="63"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">63. Faire boire à l'envers quelqu'un (verre sous le menton), un hoquet serait le bienvenu.</span><input class="mission__name" type="text" readonly data-id="63" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 63"></td></tr>
+        <tr data-junior="1" data-id="64"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">64. Trinquer 3 fois avec quelqu'un, espacé de 30 sec maximum.</span><input class="mission__name" type="text" readonly data-id="64" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 64"></td></tr>
+        <tr data-junior="1" data-id="65"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">65. Demander un mouchoir 3 fois à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="65" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 65"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="66"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">66. Obtenir un autographe de quelqu'un.</span><input class="mission__name" type="text" readonly data-id="66" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 66"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="67"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">67. Faire faire le poirier à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="67" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 67"></td></tr>
+        <tr data-junior="1" data-id="68"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">68. Demander 5 capitales à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="68" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 68"></td></tr>
+        <tr data-junior="1" data-confirme="1" data-id="69"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td><span class="mission__text">69. Faire faire au moins 5 pompes à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="69" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 69"></td></tr>
+        <tr data-junior="1" data-id="70"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">70. Faire 3 câlins à la même personne en l'espace de 20 minutes.</span><input class="mission__name" type="text" readonly data-id="70" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 70"></td></tr>
+        <tr data-senior="1" data-id="71"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">71. Lui faire pincer son nez en disant "Ohhhh c'est rigolo".</span><input class="mission__name" type="text" readonly data-id="71" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 71"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="72"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">72. Faire imiter la mitraillette à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="72" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 72"></td></tr>
+        <tr data-id="73"><td></td><td></td><td></td><td><span class="mission__text">73. Mettre une alarme à 4h00 du matin pour demain sur le téléphone de quelqu'un.</span><input class="mission__name" type="text" readonly data-id="73" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 73"></td></tr>
+        <tr data-senior="1" data-id="74"><td></td><td></td><td class="lvl">✓</td><td><span class="mission__text">74. Faire rager quelqu'un.</span><input class="mission__name" type="text" readonly data-id="74" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 74"></td></tr>
+        <tr data-junior="1" data-id="75"><td class="lvl">✓</td><td></td><td></td><td><span class="mission__text">75. Faire porter ta veste pendant 5 minutes à quelqu'un.</span><input class="mission__name" type="text" readonly data-id="75" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 75"></td></tr>
+        <tr data-confirme="1" data-senior="1" data-id="76"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td><span class="mission__text">76. Faire un tunnel pendant 3 minutes sur un sujet dont il s'en fout.</span><input class="mission__name" type="text" readonly data-id="76" maxlength="40" placeholder="Nom" aria-label="Nom assigné à la mission 76"></td></tr>
       </tbody>
     </table>
   </div>
@@ -349,6 +421,43 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
     });
   }
   apply("all");
+})();
+
+(function(){
+  var STORAGE_KEY = "killerMissionsUnlocked";
+  var trigger = document.getElementById("titleTrigger");
+  var section = document.getElementById("access");
+  var form = document.getElementById("accessForm");
+  var input = document.getElementById("accessInput");
+  var nameInputs = document.querySelectorAll(".mission__name");
+
+  function unlock(){
+    for(var i = 0; i < nameInputs.length; i++){
+      nameInputs[i].readOnly = false;
+    }
+    section.hidden = true;
+  }
+
+  if(localStorage.getItem(STORAGE_KEY) === "1"){
+    unlock();
+  }
+
+  trigger.addEventListener("dblclick", function(){
+    section.hidden = false;
+    input.focus();
+  });
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(input.value.trim().toUpperCase() === "EEE"){
+      localStorage.setItem(STORAGE_KEY, "1");
+      unlock();
+      return;
+    }
+    section.classList.remove("is-wrong");
+    void section.offsetWidth;
+    section.classList.add("is-wrong");
+  });
 })();
 
 (function(){
