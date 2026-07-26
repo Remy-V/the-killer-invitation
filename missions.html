@@ -142,6 +142,47 @@ tbody tr:last-child td{border-bottom:none;}
 tbody tr:hover{background:rgba(216,38,43,.07);}
 .lvl{color:var(--blood-bright);}
 
+@media (max-width:640px){
+  #missionsTable thead{display:none;}
+  #missionsTable, #missionsTable tbody, #missionsTable tr, #missionsTable td{display:block;width:auto;}
+  #missionsTable tbody tr{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:.4em .5em;
+    padding:.85em 1em;
+    border-bottom:1px solid var(--hair);
+  }
+  #missionsTable tbody tr:last-child{border-bottom:none;}
+  #missionsTable td{padding:0;border:none;text-align:left;vertical-align:middle;}
+  #missionsTable td:empty{display:none;}
+  #missionsTable td.lvl{
+    order:1;
+    font-size:0;
+    line-height:0;
+    border:1px solid var(--hair);
+    border-radius:2px;
+    padding:.3em .55em;
+    background:rgba(216,38,43,.08);
+  }
+  #missionsTable td.lvl::before{
+    font-size:.62rem;
+    line-height:1;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  #missionsTable td:nth-child(1).lvl::before{content:"Junior";}
+  #missionsTable td:nth-child(2).lvl::before{content:"Confirmé";}
+  #missionsTable td:nth-child(3).lvl::before{content:"Senior";}
+  #missionsTable td:last-child{
+    order:2;
+    width:100%;
+    padding-top:.35em;
+    font-size:.85rem;
+    line-height:1.5;
+  }
+}
+
 .count{
   margin:0;
   text-align:center;
