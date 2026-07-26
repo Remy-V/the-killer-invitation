@@ -85,6 +85,9 @@ for page_missions in chunk(missions, PER_PAGE):
         page_missions = page_missions + [None]
     recto_pages.append(cards)
 
+# one extra all-blank page, for missions added after this batch is printed
+recto_pages.append("".join(blank_card() for _ in range(PER_PAGE)))
+
 n_back_pages = len(recto_pages)
 verso_pages = []
 for _ in range(n_back_pages):
@@ -94,7 +97,12 @@ for _ in range(n_back_pages):
 def page_html(cards_html, label):
     return f'<section class="sheet"><p class="sheet__label">{label}</p><div class="grid">{cards_html}</div></section>\n'
 
-recto_html = "".join(page_html(c, f"RECTO &mdash; feuille {i+1}/{len(recto_pages)}") for i, c in enumerate(recto_pages))
+def recto_label(i):
+    if i == len(recto_pages) - 1:
+        return f"RECTO &mdash; feuille {i+1}/{len(recto_pages)} (cartes vierges, pour les missions ajout&eacute;es plus tard)"
+    return f"RECTO &mdash; feuille {i+1}/{len(recto_pages)}"
+
+recto_html = "".join(page_html(c, recto_label(i)) for i, c in enumerate(recto_pages))
 verso_html = "".join(page_html(c, f"VERSO &mdash; feuille {i+1}/{len(verso_pages)} (identique)") for i, c in enumerate(verso_pages))
 
 longest_num, longest_text = max(missions, key=lambda m: len(m[1]))
@@ -319,6 +327,7 @@ body{{
   </ol>
   <p>Tout reste en noir pur (pas de rouge) &mdash; sur du papier rouge, du texte rouge serait invisible, donc les accents se font par le gras plut&ocirc;t que par la couleur. Le verso reprend la mise en page &laquo;&nbsp;mail&nbsp;&raquo; du site (De&nbsp;/&nbsp;Objet).</p>
   <p>V&eacute;rifie en particulier la <strong>mission n&deg;{longest_num}</strong>, la plus longue ({len(longest_text)} caract&egrave;res), dans l'aper&ccedil;u avant impression.</p>
+  <p>La derni&egrave;re feuille RECTO ({len(recto_pages)}/{len(recto_pages)}) est enti&egrave;rement vierge &mdash; garde-la pour &eacute;crire &agrave; la main les missions ajout&eacute;es apr&egrave;s cette impression.</p>
 </div>
 
 {recto_html}
