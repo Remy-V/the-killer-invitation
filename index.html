@@ -89,6 +89,36 @@ body::after{
   body::after{opacity:0;}
 }
 
+/* ---------- sticky header ---------- */
+.sticky-header{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:.65em 1em;
+  background:rgba(5,5,5,.88);
+  -webkit-backdrop-filter:blur(6px);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--hair);
+  transform:translateY(-100%);
+  transition:transform .3s ease;
+}
+.sticky-header.is-visible{transform:translateY(0);}
+.sticky-header__title{
+  margin:0;
+  font-family:'Nosifer','EB Garamond',serif;
+  font-weight:400;
+  font-size:clamp(1rem,4vw,1.3rem);
+  color:var(--blood-bright);
+  white-space:nowrap;
+  text-shadow:0 0 12px rgba(216,38,43,.4);
+}
+@media (prefers-reduced-motion:reduce){
+  .sticky-header{transition:none;}
+}
+
 .stage{
   max-width:1120px;
   margin:0 auto;
@@ -368,6 +398,10 @@ body::after{
 
 </style>
 
+<header class="sticky-header" id="stickyHeader" aria-hidden="true">
+  <p class="sticky-header__title">The Killer</p>
+</header>
+
 <div class="stage">
   <header class="hero">
     <h1 class="title" id="titleTrigger">The<br>Killer</h1>
@@ -468,6 +502,21 @@ body::after{
     void section.offsetWidth;
     section.classList.add("is-wrong");
   });
+})();
+
+(function(){
+  var header = document.getElementById("stickyHeader");
+  var hero = document.querySelector(".hero");
+  function onScroll(){
+    var triggerY = hero.offsetTop + hero.offsetHeight;
+    if(window.scrollY > triggerY){
+      header.classList.add("is-visible");
+    } else {
+      header.classList.remove("is-visible");
+    }
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 })();
 </script>
 </body>
