@@ -158,7 +158,7 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
 .mission__name::placeholder{color:var(--steel-dim);}
 .mission__name:focus{outline:none;border-bottom-color:var(--blood);}
 .mission__name[readonly]{
-  color:var(--steel);
+  color:var(--blood-bright);
   border-bottom-color:transparent;
   cursor:default;
 }
@@ -226,6 +226,48 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
   .access.is-wrong .access__input{animation:none;}
 }
 
+/* ---------- add mission ---------- */
+.add__form{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:.6em 1em;
+}
+.add__text{
+  background:var(--panel);
+  border:1px solid var(--hair);
+  border-radius:2px;
+  color:var(--bone);
+  font-family:'Courier Prime',ui-monospace,monospace;
+  font-size:.8rem;
+  padding:.55em .7em;
+  flex:1 1 220px;
+  min-width:180px;
+}
+.add__text::placeholder{color:var(--steel-dim);}
+.add__text:focus{outline:none;border-color:var(--blood);}
+.add__levels{
+  display:flex;
+  gap:.9em;
+  flex-wrap:wrap;
+}
+.add__levels label{
+  display:inline-flex;
+  align-items:center;
+  gap:.35em;
+  color:var(--steel);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:.7rem;
+  cursor:pointer;
+}
+.add__levels input[type="checkbox"]{
+  accent-color:var(--blood);
+  width:1em;
+  height:1em;
+}
+
 @media (max-width:640px){
   #missionsTable thead{display:none;}
   #missionsTable, #missionsTable tbody, #missionsTable tr, #missionsTable td{display:block;width:auto;}
@@ -291,6 +333,18 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
     <form class="access__form" id="accessForm" autocomplete="off">
       <input class="access__input" id="accessInput" type="text" placeholder="Code d'édition" maxlength="12" aria-label="Code d'édition des noms">
       <button class="access__submit" type="submit">Valider</button>
+    </form>
+  </section>
+
+  <section class="add" id="addSection" hidden>
+    <form class="add__form" id="addForm" autocomplete="off">
+      <input class="add__text" id="addText" type="text" placeholder="Décrire la nouvelle mission" maxlength="300" required>
+      <div class="add__levels">
+        <label><input type="checkbox" name="lvl" value="junior"> Junior</label>
+        <label><input type="checkbox" name="lvl" value="confirme"> Confirmé</label>
+        <label><input type="checkbox" name="lvl" value="senior"> Senior</label>
+      </div>
+      <button class="access__submit" type="submit">Ajouter</button>
     </form>
   </section>
 
@@ -397,119 +451,207 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
 
 <script>
 (function(){
+  var BIN_URL = "https://api.jsonbin.io/v3/b/6a655626f5f4af5e29c181b5";
+  var ACCESS_KEY = "$2a$10$BKgBUClv.rFiSkRxLmcs9O6RfLSu1YwCj.VaSVGha3PiSlo10HwZG";
+  var STORAGE_KEY = "killerMissionsUnlocked";
+
+  var tbody = document.querySelector("#missionsTable tbody");
   var buttons = document.querySelectorAll(".filters__btn");
-  var rows = document.querySelectorAll("#missionsTable tbody tr");
   var counter = document.getElementById("rowCount");
-  function apply(filter){
+  var currentFilter = "all";
+  var unlocked = localStorage.getItem(STORAGE_KEY) === "1";
+
+  var accessSection = document.getElementById("access");
+  var accessForm = document.getElementById("accessForm");
+  var accessInput = document.getElementById("accessInput");
+  var titleTrigger = document.getElementById("titleTrigger");
+
+  var addSection = document.getElementById("addSection");
+  var addForm = document.getElementById("addForm");
+  var addText = document.getElementById("addText");
+
+  function applyFilter(){
+    var rows = tbody.querySelectorAll("tr");
     var visible = 0;
     for(var i = 0; i < rows.length; i++){
       var r = rows[i];
-      var show = filter === "all" || r.getAttribute("data-" + filter) === "1";
+      var show = currentFilter === "all" || r.getAttribute("data-" + currentFilter) === "1";
       r.style.display = show ? "" : "none";
       if(show) visible++;
     }
-    for(var j = 0; j < buttons.length; j++){
-      var b = buttons[j];
-      if(b.getAttribute("data-filter") === filter){
-        b.classList.add("is-active");
-      } else {
-        b.classList.remove("is-active");
-      }
-    }
     counter.textContent = visible + (visible > 1 ? " missions" : " mission");
   }
-  for(var k = 0; k < buttons.length; k++){
-    buttons[k].addEventListener("click", function(){
-      apply(this.getAttribute("data-filter"));
+
+  for(var b = 0; b < buttons.length; b++){
+    buttons[b].addEventListener("click", function(){
+      currentFilter = this.getAttribute("data-filter");
+      for(var k = 0; k < buttons.length; k++){
+        buttons[k].classList.toggle("is-active", buttons[k] === this);
+      }
+      applyFilter();
     });
   }
-  apply("all");
-})();
-
-(function(){
-  var STORAGE_KEY = "killerMissionsUnlocked";
-  var trigger = document.getElementById("titleTrigger");
-  var section = document.getElementById("access");
-  var form = document.getElementById("accessForm");
-  var input = document.getElementById("accessInput");
-  var nameInputs = document.querySelectorAll(".mission__name");
-
-  function unlock(){
-    for(var i = 0; i < nameInputs.length; i++){
-      nameInputs[i].readOnly = false;
-    }
-    section.hidden = true;
-  }
-
-  if(localStorage.getItem(STORAGE_KEY) === "1"){
-    unlock();
-  }
-
-  trigger.addEventListener("dblclick", function(){
-    section.hidden = false;
-    input.focus();
-  });
-
-  form.addEventListener("submit", function(e){
-    e.preventDefault();
-    if(input.value.trim().toUpperCase() === "EEE"){
-      localStorage.setItem(STORAGE_KEY, "1");
-      unlock();
-      return;
-    }
-    section.classList.remove("is-wrong");
-    void section.offsetWidth;
-    section.classList.add("is-wrong");
-  });
-})();
-
-(function(){
-  var BIN_URL = "https://api.jsonbin.io/v3/b/6a655626f5f4af5e29c181b5";
-  var ACCESS_KEY = "$2a$10$BKgBUClv.rFiSkRxLmcs9O6RfLSu1YwCj.VaSVGha3PiSlo10HwZG";
-  var inputs = document.querySelectorAll(".mission__name");
-
-  function byId(id){
-    for(var i = 0; i < inputs.length; i++){
-      if(inputs[i].getAttribute("data-id") === id) return inputs[i];
-    }
-    return null;
-  }
-
-  fetch(BIN_URL + "/latest", { headers: { "X-Access-Key": ACCESS_KEY } })
-    .then(function(res){ return res.json(); })
-    .then(function(data){
-      var assignments = (data.record && data.record.assignments) || {};
-      for(var id in assignments){
-        var input = byId(id);
-        if(input) input.value = assignments[id];
-      }
-    })
-    .catch(function(){ /* hors ligne : les champs restent modifiables, juste pas synchronisés */ });
 
   function saveField(id, value){
     fetch(BIN_URL + "/latest", { headers: { "X-Access-Key": ACCESS_KEY } })
       .then(function(res){ return res.json(); })
       .then(function(data){
-        var assignments = (data.record && data.record.assignments) || {};
+        var record = data.record || {};
+        var assignments = record.assignments || {};
         if(value){
           assignments[id] = value;
         } else {
           delete assignments[id];
         }
+        record.assignments = assignments;
         return fetch(BIN_URL, {
           method: "PUT",
           headers: { "Content-Type": "application/json", "X-Access-Key": ACCESS_KEY },
-          body: JSON.stringify({ assignments: assignments })
+          body: JSON.stringify(record)
         });
       })
       .catch(function(){ /* la valeur reste affichée localement même si la sauvegarde échoue */ });
   }
 
-  for(var j = 0; j < inputs.length; j++){
-    inputs[j].addEventListener("change", function(){
+  function wireNameInput(input){
+    input.readOnly = !unlocked;
+    input.addEventListener("change", function(){
       saveField(this.getAttribute("data-id"), this.value.trim());
     });
   }
+
+  function buildRow(m){
+    var tr = document.createElement("tr");
+    tr.setAttribute("data-id", m.id);
+    if(m.junior) tr.setAttribute("data-junior", "1");
+    if(m.confirme) tr.setAttribute("data-confirme", "1");
+    if(m.senior) tr.setAttribute("data-senior", "1");
+
+    var tdJ = document.createElement("td");
+    if(m.junior){ tdJ.className = "lvl"; tdJ.textContent = "✓"; }
+    var tdC = document.createElement("td");
+    if(m.confirme){ tdC.className = "lvl"; tdC.textContent = "✓"; }
+    var tdS = document.createElement("td");
+    if(m.senior){ tdS.className = "lvl"; tdS.textContent = "✓"; }
+
+    var tdM = document.createElement("td");
+    var span = document.createElement("span");
+    span.className = "mission__text";
+    span.textContent = m.id + ". " + m.text;
+    var nameInput = document.createElement("input");
+    nameInput.className = "mission__name";
+    nameInput.type = "text";
+    nameInput.maxLength = 40;
+    nameInput.placeholder = "Nom";
+    nameInput.setAttribute("data-id", m.id);
+    nameInput.setAttribute("aria-label", "Nom assigné à la mission " + m.id);
+    tdM.appendChild(span);
+    tdM.appendChild(nameInput);
+
+    tr.appendChild(tdJ);
+    tr.appendChild(tdC);
+    tr.appendChild(tdS);
+    tr.appendChild(tdM);
+    wireNameInput(nameInput);
+    return tr;
+  }
+
+  function setUnlocked(){
+    unlocked = true;
+    var inputs = tbody.querySelectorAll(".mission__name");
+    for(var i = 0; i < inputs.length; i++){
+      inputs[i].readOnly = false;
+    }
+    accessSection.hidden = true;
+    addSection.hidden = false;
+  }
+
+  titleTrigger.addEventListener("dblclick", function(){
+    accessSection.hidden = false;
+    accessInput.focus();
+  });
+
+  accessForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(accessInput.value.trim().toUpperCase() === "EEE"){
+      localStorage.setItem(STORAGE_KEY, "1");
+      setUnlocked();
+      return;
+    }
+    accessSection.classList.remove("is-wrong");
+    void accessSection.offsetWidth;
+    accessSection.classList.add("is-wrong");
+  });
+
+  addForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    var text = addText.value.trim();
+    var checks = addForm.querySelectorAll('input[name="lvl"]:checked');
+    if(!text || checks.length === 0) return;
+    var levels = { junior: false, confirme: false, senior: false };
+    for(var c = 0; c < checks.length; c++){
+      levels[checks[c].value] = true;
+    }
+
+    fetch(BIN_URL + "/latest", { headers: { "X-Access-Key": ACCESS_KEY } })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        var record = data.record || {};
+        var custom = record.custom || [];
+        var maxId = 76;
+        for(var i = 0; i < custom.length; i++){
+          if(custom[i].id > maxId) maxId = custom[i].id;
+        }
+        var mission = {
+          id: maxId + 1,
+          text: text,
+          junior: levels.junior,
+          confirme: levels.confirme,
+          senior: levels.senior
+        };
+        custom.push(mission);
+        record.custom = custom;
+        return fetch(BIN_URL, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json", "X-Access-Key": ACCESS_KEY },
+          body: JSON.stringify(record)
+        }).then(function(){
+          tbody.appendChild(buildRow(mission));
+          applyFilter();
+          addForm.reset();
+        });
+      })
+      .catch(function(){ /* échec réseau : la mission n'a pas pu être ajoutée */ });
+  });
+
+  // wire the 76 static rows, then load shared state (names + missions ajoutées ailleurs)
+  var staticInputs = tbody.querySelectorAll(".mission__name");
+  for(var s = 0; s < staticInputs.length; s++){
+    wireNameInput(staticInputs[s]);
+  }
+  if(unlocked){
+    setUnlocked();
+  }
+
+  fetch(BIN_URL + "/latest", { headers: { "X-Access-Key": ACCESS_KEY } })
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      var record = data.record || {};
+      var assignments = record.assignments || {};
+      var custom = record.custom || [];
+      for(var i = 0; i < custom.length; i++){
+        tbody.appendChild(buildRow(custom[i]));
+      }
+      var allInputs = tbody.querySelectorAll(".mission__name");
+      for(var j = 0; j < allInputs.length; j++){
+        var id = allInputs[j].getAttribute("data-id");
+        if(assignments[id]) allInputs[j].value = assignments[id];
+      }
+      applyFilter();
+    })
+    .catch(function(){ /* hors ligne : les champs restent modifiables, juste pas synchronisés */ });
+
+  applyFilter();
 })();
 </script>
 </body>
