@@ -54,7 +54,11 @@ def front_card(num, text):
     )
 
 def blank_card():
-    return f'<div class="card"><div class="card__frame">{CORNERS}</div></div>\n'
+    return (
+        f'<div class="card"><div class="card__frame">{CORNERS}'
+        f'<img class="card__qr" src="data:image/png;base64,{QR_B64}" alt="">'
+        '</div></div>\n'
+    )
 
 def back_card():
     rules_html = "".join(f"<p>{p}</p>" for p in BACK_RULES)
