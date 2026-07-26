@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Missions — The Killer</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#050505">
+<link rel="stylesheet" href="fonts.css">
+</head>
+<body>
+<style>
+
+:root{
+  --void:#050505;
+  --panel:#130b0c;
+  --panel-2:#1c1012;
+  --blood-deep:#5c0c10;
+  --blood:#a91d1f;
+  --blood-bright:#d8262b;
+  --bone:#e7ddc9;
+  --steel:#9aa3ad;
+  --steel-dim:#5b636b;
+  --hair:rgba(216,38,43,0.22);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--void);
+  color:var(--bone);
+  font-family:'EB Garamond',Georgia,serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+.stage{
+  max-width:1120px;
+  margin:0 auto;
+  padding:clamp(1.5rem,5vw,4rem) clamp(1.25rem,5vw,3rem) clamp(3rem,8vw,5rem);
+  display:flex;
+  flex-direction:column;
+  gap:clamp(1.5rem,4vw,2.25rem);
+}
+
+.hero{text-align:center;}
+.title{
+  margin:0;
+  font-family:'Nosifer','EB Garamond',serif;
+  font-weight:400;
+  line-height:.92;
+  font-size:clamp(1.8rem,6vw,3.2rem);
+  color:var(--blood-bright);
+  text-shadow:
+    0 0 26px rgba(216,38,43,.35),
+    0 3px 0 #1a0304,
+    0 6px 18px rgba(0,0,0,.7);
+}
+.hero__lead{
+  margin:.7em 0 0;
+  font-style:italic;
+  font-size:clamp(.95rem,2.4vw,1.1rem);
+  color:var(--steel);
+}
+.back{
+  display:inline-block;
+  margin-top:1.3em;
+  font-family:'Courier Prime',ui-monospace,monospace;
+  font-size:.75rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--steel);
+  text-decoration:none;
+  border-bottom:1px solid var(--hair);
+}
+.back:hover,.back:focus-visible{color:var(--blood-bright);border-color:var(--blood);}
+
+.filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6em;
+  justify-content:center;
+}
+.filters__btn{
+  background:none;
+  border:1px solid var(--hair);
+  border-radius:2px;
+  color:var(--steel);
+  font-family:'Courier Prime',ui-monospace,monospace;
+  font-size:.75rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:.5em 1em;
+  cursor:pointer;
+}
+.filters__btn:hover{border-color:var(--blood);}
+.filters__btn.is-active{
+  color:var(--void);
+  background:var(--blood);
+  border-color:var(--blood);
+}
+
+.table-wrap{
+  overflow-x:auto;
+  border:1px solid var(--hair);
+  border-radius:2px;
+  background:linear-gradient(180deg,var(--panel-2),var(--panel));
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-family:'Courier Prime',ui-monospace,monospace;
+  font-size:.83rem;
+}
+thead th{
+  position:sticky;
+  top:0;
+  background:var(--panel-2);
+  color:var(--steel);
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:.66rem;
+  font-weight:400;
+  text-align:center;
+  padding:.9em .5em;
+  border-bottom:1px solid var(--hair);
+  white-space:nowrap;
+}
+thead th:last-child{text-align:left;padding-left:1em;}
+tbody td{
+  padding:.7em .5em;
+  border-bottom:1px solid var(--hair);
+  text-align:center;
+  color:var(--bone);
+  vertical-align:top;
+}
+tbody td:last-child{
+  text-align:left;
+  padding-left:1em;
+  line-height:1.55;
+}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:rgba(216,38,43,.07);}
+.lvl{color:var(--blood-bright);}
+
+.count{
+  margin:0;
+  text-align:center;
+  font-family:'Courier Prime',ui-monospace,monospace;
+  font-size:.7rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--steel-dim);
+}
+
+</style>
+
+<div class="stage">
+  <header class="hero">
+    <h1 class="title">Missions</h1>
+    <p class="hero__lead">76 missions. Trois niveaux. Une seule règle : ne pas se faire prendre.</p>
+    <a class="back" href="index.html">‹ Retour</a>
+  </header>
+
+  <nav class="filters" aria-label="Filtrer par niveau">
+    <button class="filters__btn is-active" data-filter="all" type="button">Toutes</button>
+    <button class="filters__btn" data-filter="junior" type="button">Junior</button>
+    <button class="filters__btn" data-filter="confirme" type="button">Confirmé</button>
+    <button class="filters__btn" data-filter="senior" type="button">Senior</button>
+  </nav>
+
+  <div class="table-wrap">
+    <table id="missionsTable">
+      <thead>
+        <tr>
+          <th scope="col">Junior</th>
+          <th scope="col">Confirmé</th>
+          <th scope="col">Senior</th>
+          <th scope="col">Mission</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>1. Apporter un verre à quelqu'un 3 fois de suite (s'il se sert entre deux verres, le compteur retombe à zéro).</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>2. Porter les lunettes de vue de quelqu'un pendant au moins 1 minute.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>3. Faire un combat de pouce avec quelqu'un. 2 manches minimum.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>4. Faire marcher quelqu'un à reculons sur au moins 3 mètres.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>5. Faire faire deux DAB, un vers la droite, un vers la gauche, à quelqu'un.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>6. Faire faire un 67 à quelqu'un.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>7. Faire un massage d'épaule à quelqu'un pendant au moins une minute.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>8. Faire s'asseoir quelqu'un par-terre avec toi et rester au moins 2 minutes.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>9. Faire un tour de magie à quelqu'un (vous devez obtenir son consentement). Vous ne savez pas faire de tour de magie ? Cherchez sur internet, les plus simples peuvent être les plus efficaces... ou pas...</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>10. Porter quelqu'un sur son dos ou inversement et marcher au moins 5 mètres.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>11. Allumer la cigarette de quelqu'un au moins 2 fois. Vous n'avez pas de briquet ? Dommage pour vous... Trouvez-en un.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>12. Faire réciter le théorème de Pythagore à quelqu'un.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>13. Faire 3 parties de chifoumi avec quelqu'un.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>14. Demander de garder sa place à quelqu'un, le/la faire placer à votre place et la récupérer après votre absence.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>15. Faire chanter quelqu'un avec un objet en guise de micro (il doit le prendre en main).</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>16. Faire tenir son verre à quelqu'un pendant au moins 3 minutes (partir est autorisé, mais la personne doit le garder dans sa main).</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>17. Faire tenir ou porter un objet insolite sur la tête à quelqu'un, soit pendant 3 minutes, soit faire une photo avec.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>18. Manger un aliment sans le toucher, donné par quelqu'un.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>19. Faire faire raconter une anecdote commençant par "Quand j'étais petit" à quelqu'un.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>20. Obtenir l'heure d'une personne 3 fois en l'espace de 20 minutes.</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>21. Faire faire un calcul sur le téléphone de quelqu'un, il doit vous annoncer le résultat.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>22. Emprunter un accessoire de quelqu'un avec son accord, et le porter 3 minutes minimum (montre, bijou, acceptés, lunettes trop facile).</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>23. Faire finir ses fins de phrases au moins 3 fois par quelqu'un sans perdre la parole.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>24. Faire faire une ombre chinoise avec la lumière du vidéo-projecteur à quelqu'un.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>25. Faire chanter avec toi un refrain d'une chanson a capella (si musique de fond/DJ, non valide).</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>26. Faire sauter quelqu'un au moins 5 fois de suite (exercices, jump jacks, etc. autorisés).</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>27. Improviser un mélange improbable d'au moins 2 boissons (au moins 20cl) et le faire boire à quelqu'un. Attention, il doit le boire en entier.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>28. Attacher quelque chose sur les cheveux (oreille, tête, ...) de quelqu'un, pendant au moins 5 minutes.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>29. Faire tenir ta chaussure à quelqu'un pendant au moins 30 secondes.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>30. Faire dire une phrase en langue étrangère (en anglais -&gt; 3 phrases minimum) à quelqu'un.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>31. Faire courir quelqu'un tout seul sur au moins 5 mètres.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>32. Inventer un check avec quelqu'un.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>33. Apprendre à quelqu'un une phrase compliquée à prononcer (exemple : Si 6 scies scient 6 saucissons, 600 scies scient 600 saucissons).</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>34. Faire faire se gratter la nuque à quelqu'un pendant une conversation.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>35. Faire danser quelqu'un avec un objet (minimum un peu encombrant, un verre ne marche pas).</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>36. Faire du Air-Guitar (ou n'importe quel instrument) avec quelqu'un.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>37. Faire boire de l'alcool à la cuillère à quelqu'un.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>38. Demander une cigarette à quelqu'un et ne pas la fumer avec lui. La garder au moins 5 minutes.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>39. Faire une story selfie publiée (n'importe quel réseau social) avec quelqu'un.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>40. Faire un selfie avec le téléphone de quelqu'un d'autre (tue la personne qui a le téléphone).</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>41. Jouer à "Daniel" avec quelqu'un (appeler un "Daniel" le plus fort possible pour qu'un maximum de gens se retournent).</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>42. Faire les lacets de quelqu'un (autorisé à les défaire, soyez discret, mais à vous de les refaire).</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>43. Recoiffer 3 fois quelqu'un. Pas de limite de temps, mais pas à la chaîne.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>44. Demander à quelqu'un d'appeler par téléphone n'importe quel numéro.</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>45. Faire faire un high-five avec quelqu'un et le rater 2 fois volontairement.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>46. Faire citer au moins 3 répliques d'un même film/série à quelqu'un.</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>47. Te faire amener un chargeur de téléphone par quelqu'un (batterie externe autorisée).</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>48. Montrer le chemin des toilettes à quelqu'un. Attention, la destination ne doit pas être les toilettes.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>49. Convaincre quelqu'un d'essayer de se lécher le coude.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>50. Faire la bise 3 fois au cours de la journée à quelqu'un.</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>51. Récupérer la carte Killer de quelqu'un sans qu'elle s'en aperçoive. Son objectif devient le vôtre s'il ne réclame pas sa carte après 10 minutes.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>52. Dessiner quelque chose sur la peau de quelqu'un, avec consentement.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>53. Faire faire une pile d'objets qui doit tenir en équilibre à quelqu'un.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>54. Faire jongler quelqu'un.</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>55. Faire répéter 4 fois de suite quelqu'un.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>56. Faire regarder une vidéo YouTube à quelqu'un (une minute minimum).</td></tr>
+        <tr data-confirme="1"><td></td><td class="lvl">✓</td><td></td><td>57. Faire une "pinky promesse" avec quelqu'un.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>58. Faire énoncer le code de déverrouillage de son téléphone à voix haute à quelqu'un.</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>59. Jouer au jeu du silence avec quelqu'un et remporter la partie.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>60. Convaincre quelqu'un de te dévoiler sa mission. Sa mission deviendra la vôtre.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>61. Faire dire son numéro de sécurité sociale à quelqu'un.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>62. Faire sortir sa carte d'identité à quelqu'un (permis, autre autorisé, du moment qu'il y a sa photo).</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>63. Faire boire à l'envers quelqu'un (verre sous le menton), un hoquet serait le bienvenu.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>64. Trinquer 3 fois avec quelqu'un, espacé de 30 sec maximum.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>65. Demander un mouchoir 3 fois à quelqu'un.</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>66. Obtenir un autographe de quelqu'un.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>67. Faire faire le poirier à quelqu'un.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>68. Demander 5 capitales à quelqu'un.</td></tr>
+        <tr data-junior="1" data-confirme="1"><td class="lvl">✓</td><td class="lvl">✓</td><td></td><td>69. Faire faire au moins 5 pompes à quelqu'un.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>70. Faire 3 câlins à la même personne en l'espace de 20 minutes.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>71. Lui faire pincer son nez en disant "Ohhhh c'est rigolo".</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>72. Faire imiter la mitraillette à quelqu'un.</td></tr>
+        <tr><td></td><td></td><td></td><td>73. Mettre une alarme à 4h00 du matin pour demain sur le téléphone de quelqu'un.</td></tr>
+        <tr data-senior="1"><td></td><td></td><td class="lvl">✓</td><td>74. Faire rager quelqu'un.</td></tr>
+        <tr data-junior="1"><td class="lvl">✓</td><td></td><td></td><td>75. Faire porter ta veste pendant 5 minutes à quelqu'un.</td></tr>
+        <tr data-confirme="1" data-senior="1"><td></td><td class="lvl">✓</td><td class="lvl">✓</td><td>76. Faire un tunnel pendant 3 minutes sur un sujet dont il s'en fout.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="count" id="rowCount"></p>
+</div>
+
+<script>
+(function(){
+  var buttons = document.querySelectorAll(".filters__btn");
+  var rows = document.querySelectorAll("#missionsTable tbody tr");
+  var counter = document.getElementById("rowCount");
+  function apply(filter){
+    var visible = 0;
+    for(var i = 0; i < rows.length; i++){
+      var r = rows[i];
+      var show = filter === "all" || r.getAttribute("data-" + filter) === "1";
+      r.style.display = show ? "" : "none";
+      if(show) visible++;
+    }
+    for(var j = 0; j < buttons.length; j++){
+      var b = buttons[j];
+      if(b.getAttribute("data-filter") === filter){
+        b.classList.add("is-active");
+      } else {
+        b.classList.remove("is-active");
+      }
+    }
+    counter.textContent = visible + (visible > 1 ? " missions" : " mission");
+  }
+  for(var k = 0; k < buttons.length; k++){
+    buttons[k].addEventListener("click", function(){
+      apply(this.getAttribute("data-filter"));
+    });
+  }
+  apply("all");
+})();
+</script>
+</body>
+</html>
