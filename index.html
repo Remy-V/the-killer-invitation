@@ -50,6 +50,47 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
+/* ---------- ambient background ---------- */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 25%, rgba(92,12,16,.32), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 82% 75%, rgba(92,12,16,.26), transparent 65%),
+    radial-gradient(ellipse 140% 100% at 50% 50%, transparent 35%, rgba(0,0,0,.6) 100%);
+  background-repeat:no-repeat;
+  animation:ambientDrift 28s ease-in-out infinite alternate;
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:radial-gradient(ellipse 120% 90% at 50% 35%, rgba(216,38,43,.55), transparent 55%);
+  opacity:0;
+  mix-blend-mode:screen;
+  animation:ambientFlash 24s ease-in-out infinite;
+}
+@keyframes ambientDrift{
+  0%{transform:scale(1) translate(0,0);}
+  100%{transform:scale(1.15) translate(-3%,-2%);}
+}
+@keyframes ambientFlash{
+  0%,11%,13%,38%,40.2%,41%,69%,71%,100%{opacity:0;}
+  12%{opacity:.55;}
+  39%{opacity:.3;}
+  39.6%{opacity:.05;}
+  70%{opacity:.45;}
+}
+@media (prefers-reduced-motion:reduce){
+  body::before,body::after{animation:none;}
+  body::after{opacity:0;}
+}
+
 .stage{
   max-width:1120px;
   margin:0 auto;
