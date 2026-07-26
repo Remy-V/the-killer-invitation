@@ -62,7 +62,7 @@ body::before{
     radial-gradient(ellipse 55% 45% at 82% 75%, rgba(92,12,16,.26), transparent 65%),
     radial-gradient(ellipse 140% 100% at 50% 50%, transparent 35%, rgba(0,0,0,.6) 100%);
   background-repeat:no-repeat;
-  animation:ambientDrift 28s ease-in-out infinite alternate;
+  animation:ambientDrift 70s ease-in-out infinite alternate;
 }
 body::after{
   content:"";
@@ -73,18 +73,17 @@ body::after{
   background:radial-gradient(ellipse 120% 90% at 50% 35%, rgba(216,38,43,.55), transparent 55%);
   opacity:0;
   mix-blend-mode:screen;
-  animation:ambientFlash 24s ease-in-out infinite;
+  animation:ambientFlash 32s ease-in-out infinite;
 }
 @keyframes ambientDrift{
   0%{transform:scale(1) translate(0,0);}
-  100%{transform:scale(1.15) translate(-3%,-2%);}
+  100%{transform:scale(1.04) translate(-1%,-.6%);}
 }
 @keyframes ambientFlash{
-  0%,11%,13%,38%,40.2%,41%,69%,71%,100%{opacity:0;}
-  12%{opacity:.55;}
-  39%{opacity:.3;}
-  39.6%{opacity:.05;}
-  70%{opacity:.45;}
+  0%,10%,16%,36%,42%,68%,76%,100%{opacity:0;}
+  13%{opacity:.14;}
+  39%{opacity:.09;}
+  72%{opacity:.11;}
 }
 @media (prefers-reduced-motion:reduce){
   body::before,body::after{animation:none;}
