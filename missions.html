@@ -98,6 +98,27 @@ body{
   background:var(--blood);
   border-color:var(--blood);
 }
+.filters__toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:.45em;
+  border:1px solid var(--hair);
+  border-radius:2px;
+  padding:.5em 1em;
+  font-family:'Courier Prime',ui-monospace,monospace;
+  font-size:.75rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--steel);
+  cursor:pointer;
+}
+.filters__toggle:hover{border-color:var(--blood);}
+.filters__toggle input{
+  accent-color:var(--blood);
+  width:1em;
+  height:1em;
+  margin:0;
+}
 
 .table-wrap{
   overflow-x:auto;
@@ -353,6 +374,10 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
     <button class="filters__btn" data-filter="junior" type="button">Junior</button>
     <button class="filters__btn" data-filter="confirme" type="button">Confirmé</button>
     <button class="filters__btn" data-filter="senior" type="button">Senior</button>
+    <label class="filters__toggle">
+      <input type="checkbox" id="unassignedOnly">
+      Non distribué
+    </label>
   </nav>
 
   <div class="table-wrap">
@@ -468,6 +493,7 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
   var addSection = document.getElementById("addSection");
   var addForm = document.getElementById("addForm");
   var addText = document.getElementById("addText");
+  var unassignedOnly = document.getElementById("unassignedOnly");
 
   function applyFilter(){
     var rows = tbody.querySelectorAll("tr");
@@ -475,6 +501,10 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
     for(var i = 0; i < rows.length; i++){
       var r = rows[i];
       var show = currentFilter === "all" || r.getAttribute("data-" + currentFilter) === "1";
+      if(show && unassignedOnly.checked){
+        var nameInput = r.querySelector(".mission__name");
+        show = !!nameInput && nameInput.value.trim() === "";
+      }
       r.style.display = show ? "" : "none";
       if(show) visible++;
     }
@@ -490,6 +520,8 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
       applyFilter();
     });
   }
+
+  unassignedOnly.addEventListener("change", applyFilter);
 
   function saveField(id, value){
     fetch(BIN_URL + "/latest", { headers: { "X-Access-Key": ACCESS_KEY } })
@@ -516,6 +548,7 @@ tbody tr:hover{background:rgba(216,38,43,.07);}
     input.readOnly = !unlocked;
     input.addEventListener("change", function(){
       saveField(this.getAttribute("data-id"), this.value.trim());
+      applyFilter();
     });
   }
 
