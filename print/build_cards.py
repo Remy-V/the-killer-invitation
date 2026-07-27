@@ -26,7 +26,7 @@ assert missions, "no missions found in missions.html — did the markup change?"
 
 BACK_GREETING = "Bienvenue Killer,"
 BACK_RULES = [
-    "Votre mission est au dos. <strong>Gardez-la secrète</strong> : si on la devine, donnez votre carte.",
+    "Votre mission est au dos. <strong>Gardez-la secrète</strong> : si on la devine, vous devrez donner votre carte.",
     "Mission réussie ? Annoncez-le discrètement à votre cible : <strong>elle vous remet sa carte</strong>.",
     "Démasqué par 3 témoins à la fois ? <strong>Vous perdez votre carte</strong> — redistribuée par notre agent infiltré.",
     "Dès 18h30 : <strong>récoltez un maximum de cartes</strong>. Discrétion et prudence, ne vous faites pas tuer...",
