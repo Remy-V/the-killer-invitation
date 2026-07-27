@@ -2,9 +2,8 @@
 Regenerate print/cartes-killer.html from the live mission list in ../missions.html.
 
 Run from anywhere:  python print/build_cards.py
-Requires print/qr_b64.txt (base64 PNG QR code) and
-print/dancing_script_b64.txt (base64 woff2, the mission-text font) to
-already exist — see CLAUDE.md for how to regenerate either if needed.
+Requires print/qr_b64.txt (base64 PNG QR code) to already exist — see
+CLAUDE.md for how to regenerate it if the target URL ever changes.
 """
 import re
 from pathlib import Path
@@ -20,9 +19,6 @@ with open(REPO / "missions.html", encoding="utf-8") as f:
 
 with open(HERE / "qr_b64.txt", encoding="utf-8") as f:
     QR_B64 = f.read().strip()
-
-with open(HERE / "dancing_script_b64.txt", encoding="utf-8") as f:
-    DANCING_SCRIPT_B64 = f.read().strip()
 
 raw = re.findall(r'<span class="mission__text">(\d+)\. ([^<]*)</span>', missions_html)
 missions = [(num, text) for num, text in raw]
@@ -118,13 +114,6 @@ html = f"""<!doctype html>
 <title>Cartes Killer &mdash; impression</title>
 <style>
 {fonts_css}
-@font-face{{
-  font-family:'Dancing Script';
-  font-style:normal;
-  font-weight:700;
-  font-display:swap;
-  src:url(data:font/woff2;base64,{DANCING_SCRIPT_B64}) format('woff2');
-}}
 
 :root{{
   --void:#050505;
@@ -237,10 +226,10 @@ body{{
 }}
 .card__text{{
   margin:0;
-  font-family:'Dancing Script',cursive;
+  font-family:'Courier Prime',ui-monospace,monospace;
   font-weight:700;
-  font-size:13pt;
-  line-height:1.32;
+  font-size:9pt;
+  line-height:1.22;
   text-align:center;
   color:#000;
   flex:1;
