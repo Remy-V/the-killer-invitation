@@ -49,22 +49,18 @@ def front_card(num, text):
         + CORNERS +
         f'<p class="card__eyebrow">KILLER INC. &middot; MISSION N&deg; {esc(num)}</p>'
         f'<p class="card__text">{esc(text)}</p>'
-        f'<img class="card__qr" src="data:image/png;base64,{QR_B64}" alt="">'
         '</div></div>\n'
     )
 
 def blank_card():
-    return (
-        f'<div class="card"><div class="card__frame">{CORNERS}'
-        f'<img class="card__qr" src="data:image/png;base64,{QR_B64}" alt="">'
-        '</div></div>\n'
-    )
+    return f'<div class="card"><div class="card__frame">{CORNERS}</div></div>\n'
 
 def back_card():
     rules_html = "".join(f"<p>{p}</p>" for p in BACK_RULES)
     return (
         '<div class="card"><div class="card__frame">'
         + CORNERS +
+        f'<img class="card__qr" src="data:image/png;base64,{QR_B64}" alt="">'
         '<div class="card__mailhead">'
         '<p><span class="card__field">De :</span> Killer Inc.</p>'
         '<p><span class="card__field">Objet :</span> Votre mission de ce soir</p>'
@@ -240,13 +236,11 @@ body{{
   display:flex;
   align-items:center;
   justify-content:center;
-  position:relative;
-  z-index:2;
 }}
 .card__qr{{
   position:absolute;
   right:1.8mm;
-  bottom:1.8mm;
+  top:1.8mm;
   width:12.5mm;
   height:12.5mm;
   z-index:1;
@@ -254,6 +248,8 @@ body{{
 }}
 
 .card__mailhead{{
+  position:relative;
+  z-index:2;
   margin:1mm 0 1.3mm;
   padding-bottom:1mm;
   border-bottom:.35pt dashed #000;
