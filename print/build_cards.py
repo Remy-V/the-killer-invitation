@@ -26,10 +26,10 @@ assert missions, "no missions found in missions.html — did the markup change?"
 
 BACK_GREETING = "Bienvenue Killer,"
 BACK_RULES = [
-    "Votre mission aujourd'hui se trouve au dos de cette carte. <strong>Ne divulguez en aucun cas votre mission</strong>, si quelqu'un devine votre mission, vous devez lui donner votre carte, à la condition qu'il n'en ait pas.",
-    "Mission accomplie ? Annoncez discrètement à votre cible que vous l'avez tué. <strong>Il devra vous remettre sa carte</strong>.",
-    "Si votre mission est démasquée par plus de 3 personnes en même temps, <strong>vous perdez votre carte</strong>. Elle sera redistribuée par notre agent sur place qui «prétend être» un des témoins du marié.",
-    "Votre mission commence à partir de 18h30. <strong>Récoltez un maximum de cartes Killer</strong>. Soyez créatif et discret, mais restez sur vos gardes, ne vous faites pas tuer...",
+    "Votre mission est au dos. <strong>Gardez-la secrète</strong> : si on la devine, donnez votre carte (sauf si vous n'en avez plus).",
+    "Mission réussie ? Annoncez-le discrètement à votre cible : <strong>elle vous remet sa carte</strong>.",
+    "Démasqué par 3 témoins à la fois ? <strong>Vous perdez votre carte</strong> — redistribuée par notre agent infiltré.",
+    "Dès 18h30 : <strong>récoltez un maximum de cartes</strong>. Discrétion et prudence, ne vous faites pas tuer...",
 ]
 BACK_SIGN = "Tous les coups sont permis. Bonne chance."
 
