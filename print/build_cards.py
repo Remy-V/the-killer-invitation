@@ -257,7 +257,7 @@ body{{
 .card__mailhead p{{
   margin:0 0 .4mm;
   font-family:'Courier Prime',ui-monospace,monospace;
-  font-size:5.1pt;
+  font-size:6pt;
   color:#000;
 }}
 .card__mailhead p:last-child{{margin-bottom:0;}}
@@ -269,7 +269,7 @@ body{{
 .card__greeting{{
   margin:0 0 1mm;
   font-family:'Courier Prime',ui-monospace,monospace;
-  font-size:5.1pt;
+  font-size:6pt;
   line-height:1.24;
   color:#000;
 }}
@@ -280,7 +280,7 @@ body{{
 .card__rules p{{
   margin:0 0 1mm;
   font-family:'Courier Prime',ui-monospace,monospace;
-  font-size:5.1pt;
+  font-size:6pt;
   line-height:1.24;
   text-align:justify;
   text-indent:2.5mm;
@@ -297,7 +297,7 @@ body{{
   font-family:'EB Garamond',Georgia,serif;
   font-style:italic;
   font-weight:700;
-  font-size:6.1pt;
+  font-size:7pt;
 }}
 
 @media print{{
